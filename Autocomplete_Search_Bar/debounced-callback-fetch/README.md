@@ -9,7 +9,7 @@
 
 ## Returns
 
-- - (Function): Returns the debounced function.
+- (Function): Returns the debounced function.
 
 ## Notes
 
