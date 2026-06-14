@@ -1,7 +1,8 @@
-# Implement Debounced API Calls using a Debounced Value
+# Implement Debounced Local Filtering using a Debounced Value
 
-- Make API calls in a debounced fashion by utilizing a custom `useDebounce` hook.
-- Instead of debouncing the callback execution itself, debounce the search input value and trigger the API call whenever the debounced value changes.
+- Fetch all data once during the initial component mount.
+- Store the fetched data locally in component state.
+- Instead of making API calls on every search input change, debounce the search input value and perform filtering on the already fetched local dataset.
 
 ## useDebounce Hook Arguments
 
@@ -15,23 +16,30 @@
 ## Notes
 
 - For this implementation, the custom hook internally manages a state value and updates it only after the specified delay has elapsed without further changes.
+
 - The hook does **not** return a function. Instead, it returns a debounced version of the input value.
 
+- The API call is executed only once when the component mounts.
+
 - Whenever the user types, `query` updates immediately.
+
 - `debouncedSearch` updates only after the user stops typing for the specified delay.
 
-`const debouncedSearch = useDebounce(query, 300);`
+- Filtering is performed against the already available local dataset using the debounced value.
 
-- The API call is then triggered whenever `debouncedSearch` changes.
+- No additional API calls are made after the initial data fetch.
 
-### Why we did not use `useRef`?
+## Why we do not store filtered results in state?
 
-- In this approach, we are debouncing a **value**, not a callback function.
-- The debounce behavior is achieved through the `useEffect` cleanup mechanism.
+- `filteredResults` is a derived value that can be computed from:
+  - The original dataset.
+  - The debounced search term.
 
-- Whenever the input value changes:
-  - React executes the cleanup function from the previous effect.
-  - The previous timer is cleared.
-  - A new timer is scheduled.
+- Since it can be derived during rendering, there is no need to maintain a separate state variable for it.
 
-- Because React automatically manages the timer lifecycle through effect cleanup, there is no need to manually persist a timer ID using `useRef`.
+- This avoids unnecessary state management and keeps a single source of truth for the fetched data.
+
+## Mental Model
+
+- Debounced API Call = "Delay fetching data."
+- Debounced Local Filtering = "Fetch once, delay searching through the data."

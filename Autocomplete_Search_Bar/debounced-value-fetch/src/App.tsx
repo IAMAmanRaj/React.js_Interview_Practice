@@ -64,7 +64,9 @@ const App = () => {
         </div>
         {!loading && error && <span>Error...</span>}
         {loading && !error && <span>Loading...</span>}
-        {!loading && !error && !results && <span>Result is empty...</span>}
+        {!loading && !error && results.length === 0 && (
+          <span>Result is empty...</span>
+        )}
         {!loading &&
           results &&
           open &&
