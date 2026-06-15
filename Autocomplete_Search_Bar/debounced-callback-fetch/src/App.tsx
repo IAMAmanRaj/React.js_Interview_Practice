@@ -10,7 +10,7 @@ const App = () => {
 
   const filterData = (data, searchTerm) => {
     const filteredData = data.filter((item) =>
-      item.attributes.name.toLowerCase().startsWith(searchTerm),
+      item.attributes.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
     );
     setResults(filteredData);
   };

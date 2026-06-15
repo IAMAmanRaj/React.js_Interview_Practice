@@ -30,7 +30,7 @@ const App = () => {
   }, []);
 
   const filteredResults = results.filter((item) =>
-    item.attributes.name.toLowerCase().startsWith(debouncedSearch),
+    item.attributes.name.toLowerCase().startsWith(debouncedSearch.toLowerCase()),
   );
 
   return (
